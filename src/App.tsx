@@ -6,25 +6,28 @@ import {Board} from "./models/Board.ts";
 
 const App = () => {
 
-    const [board, setBoard] = useState(new Board())
+	const [board, setBoard] = useState(new Board())
 
-    useEffect(() => {
-        restart()
-    }, [])
+	useEffect(() => {
+		restart()
+	}, [])
 
-    const restart = () => {
-        const newBoard = new Board()
-        newBoard.initCells()
-        setBoard(newBoard)
-    }
+	const restart = () => {
+		const newBoard = new Board()
+		newBoard.initCells()
+		setBoard(newBoard)
+	}
 
-    return (
-        <div className="App">
+	return (
+		<div className="App">
 
-            <BoardComponent board={board} setBoard={setBoard}/>
+			<BoardComponent
+				board={board}
+				setBoard={setBoard}
+			/>
 
-        </div>
-    );
+		</div>
+	);
 };
 
 export default App;
