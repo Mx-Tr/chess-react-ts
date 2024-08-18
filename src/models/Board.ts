@@ -23,7 +23,6 @@ export class Board {
 					row.push(new Cell(this, j, i, Colors.WHITE, null)) // Белые ячейки
 				}
 			}
-
 			this.cells.push(row);
 		}
 	}
