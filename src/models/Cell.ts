@@ -75,11 +75,11 @@ export class Cell {
 			return false
 		}
 
-		const dy = this.y < target.y ? 1: -1
-		const dx = this.x < target.x ? 1: -1
+		const dy = this.y < target.y ? 1 : -1
+		const dx = this.x < target.x ? 1 : -1
 
 		for (let i = 1; i < absY; i++) {
-			if (!this.board.getCell(this.x + dx*i, this.y + dy*i).isEmpty()) {
+			if (!this.board.getCell(this.x + dx * i, this.y + dy * i).isEmpty()) {
 				return false;
 			}
 		}
@@ -92,9 +92,14 @@ export class Cell {
 		this.figure.cell = this;
 	}
 
+
+
 	moveFigure(target: Cell) {
 		if (this.figure && this.figure.canMove(target)) {
 			this.figure.moveFigure(target)
+			if (target.figure) {
+				this.board.addLostFigure(target.figure);
+			}
 			target.setFigure(this.figure);
 			this.figure = null;
 
