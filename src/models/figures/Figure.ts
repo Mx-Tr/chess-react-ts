@@ -5,12 +5,11 @@ import {Cell} from "../Cell.ts";
 export enum FigureNames {
 	FIGURE = "Фигура",
 	KING = "Король",
-	KNIGHT = "Конь",
-	PAWN = "Пешка",
 	QUEEN = "Ферзь",
 	ROOK = "Ладья",
+	KNIGHT = "Конь",
 	BISHOP = "Слон",
-
+	PAWN = "Пешка",
 }
 
 export class Figure {
