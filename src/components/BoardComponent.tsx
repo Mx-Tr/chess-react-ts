@@ -1,25 +1,33 @@
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {Board} from "../models/Board.ts";
-import {FC} from "react";
 import CellComponent from "./CellComponent.tsx";
 import {Cell} from "../models/Cell.ts";
+import {Player} from "../models/Player.ts";
+import {Colors} from "../models/Colors.ts";
 
 interface BoardProps {
 	board: Board;
 	setBoard: (board: Board) => void;
+	currentPlayer: Player | null;
+	swapPlayer: () => void;
 }
 
-const BoardComponent: FC<BoardProps> = ({board, setBoard}) => {
+const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, swapPlayer}) => {
 	const [selectedCell, setSelectedCell] = useState<Cell | null>(null)
 
 	function click(cell: Cell) {
 
 		if (selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)) {
 			selectedCell.moveFigure(cell);
+			swapPlayer();
 			setSelectedCell(null)
 		} else {
-			setSelectedCell(cell);
+			if (cell.figure?.color === currentPlayer?.color) {
+				setSelectedCell(cell);
+			}
 		}
+
+
 	}
 
 	useEffect(() => {
@@ -37,21 +45,26 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard}) => {
 	}
 
 	return (
-		<div className="board">
+		<div>
 
-			{board.cells.map((row, index) =>
-				<React.Fragment key={index}>
-					{row.map((cell) =>
-						<CellComponent
-							cell={cell}
-							selected={cell.x === selectedCell?.x && cell.y === selectedCell?.y}
-							click={click}
-							key={cell.id}
-						/>
-					)}
-				</React.Fragment>
-			)}
+			<h3>Текущий игрок: {currentPlayer?.color === Colors.BLACK ? "Черный" : "Белый"}</h3>
 
+			<div className="board">
+
+				{board.cells.map((row, index) =>
+					<React.Fragment key={index}>
+						{row.map((cell) =>
+							<CellComponent
+								cell={cell}
+								selected={cell.x === selectedCell?.x && cell.y === selectedCell?.y}
+								click={click}
+								key={cell.id}
+							/>
+						)}
+					</React.Fragment>
+				)}
+
+			</div>
 		</div>
 	);
 };
